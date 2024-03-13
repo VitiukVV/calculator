@@ -1,7 +1,8 @@
 const calculator = document.querySelector(".calculator");
 const calculatorDisplay = document.querySelector(".display-value");
 const inputBtns = document.querySelectorAll("button");
-const reset = document.querySelector(".reset");
+const clearBtn = document.querySelector("#clear-btn");
+const resetBtn = document.querySelector("#reset-btn");
 
 let firstValue = 0;
 let operatorValue = "";
@@ -12,7 +13,7 @@ const calculate = {
     "*": (firstNumber, secondNumber) => firstNumber * secondNumber,
     "+": (firstNumber, secondNumber) => firstNumber + secondNumber,
     "-": (firstNumber, secondNumber) => firstNumber - secondNumber,
-    "=": (firstNumber, secondNumber) => secondNumber,
+    "=": (_, secondNumber) => secondNumber,
 };
 
 const sendNumberValue = (number) => {
@@ -26,7 +27,7 @@ const sendNumberValue = (number) => {
     }
 };
 
-const resetAll = () => {
+const clearAll = () => {
     firstValue = 0;
     operatorValue = "";
     awaitingNextValue = false;
@@ -69,7 +70,7 @@ const useOperator = (operator) => {
             const result = "rUSSIA";
             calculatorDisplay.textContent = result;
             calculator.classList.add("broken");
-            reset.classList.add("show");
+            resetBtn.classList.add("show");
             return;
         }
 
@@ -98,13 +99,11 @@ inputBtns.forEach((inputBtn) => {
         case inputBtn.classList.contains("decimal"):
             inputBtn.addEventListener("click", () => addDecimal());
             break;
-        case inputBtn.classList.contains("clear"):
-            inputBtn.addEventListener("click", resetAll);
-            break;
-        case inputBtn.classList.contains("reset"):
-            inputBtn.addEventListener("click", () => {
-                window.location = window.location;
-            });
-            break;
     }
+});
+
+clearBtn.addEventListener("click", clearAll);
+
+resetBtn.addEventListener("click", () => {
+    window.location = window.location;
 });
